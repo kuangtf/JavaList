@@ -39,8 +39,8 @@
 ## 三、方法引用
 **例子：**  假设你希望只要出现一个定时器就打印这个事件对象。
 - 1.使用lambda表达式：```var timer = new Timer(1000, event -> System.out.println(event));```
-- 2.使用方法引用：  ```var timer = new Timer(1000, System.out**::**println);```
-* 表达式 System.out**::**println  就是一个方法引用，它只是编译器生成一个函数式接口的实例，覆盖这个接口的抽象方法来调用给定的方法。
+- 2.使用方法引用：  ```var timer = new Timer(1000, System.out:: println);```
+* 表达式 System.out **::** println  就是一个方法引用，它只是编译器生成一个函数式接口的实例，覆盖这个接口的抽象方法来调用给定的方法。
 > 注意：
 - 1.类似于lambda表达式，方法引用也不是一个对象。不过，为一个类型为函数式接口的变量赋值时会生成一个对象。
 - 2.只有当lambda表达式的体只调用一个方法而不做其他操作时，才能把lambda表达式重写为方法引用。
