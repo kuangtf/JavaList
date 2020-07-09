@@ -1,0 +1,210 @@
+# 文件系统的简单操作
+
+## 一、磁盘与目录的容量
+
+- df：列出文件系统的整体磁盘使用量；
+
+```
+[root@study ~]# df [-ahikHTm] [目录或文件名]
+选项与参数：
+-a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；
+-k ：以 KBytes 的容量显示各文件系统；
+-m ：以 MBytes 的容量显示各文件系统；
+-h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；
+-H ：以 M=1000K 取代 M=1024K 的进位方式；
+-T ：连同该 partition 的 filesystem 名称 （例如 xfs） 也列出；
+-i ：不用磁盘容量，而以 inode 的数量来显示
+范例一：将系统内所有的 filesystem 列出来！
+[root@study ~]# df
+Filesystem 1K-blocks Used Available Use% Mounted on
+/dev/mapper/centos-root 10475520 3409408 7066112 33% /
+devtmpfs 627700 0 627700 0% /dev
+tmpfs 637568 80 637488 1% /dev/shm
+tmpfs 637568 24684 612884 4% /run
+tmpfs 637568 0 637568 0% /sys/fs/cgroup
+/dev/mapper/centos-home 5232640 67720 5164920 2% /home
+/dev/vda2 1038336 133704 904632 13% /boot
+# 在 Linux 下面如果 df 没有加任何选项，那么默认会将系统内所有的
+# （不含特殊内存内的文件系统与 swap） 都以 1 KBytes 的容量来列出来！
+# 至于那个 /dev/shm 是与内存有关的挂载，先不要理他！
+```
+
+
+
+- 范例一所输出的结果讯息为：
+  1. Filesystem：代表该文件系统是在哪个 partition ，所以列出设备名称；
+  2. 1k-blocks：说明下面的数字单位是 1KB 呦！可利用 -h 或 -m 来改变容量；
+  3. Used：顾名思义，就是使用掉的磁盘空间啦！
+  4. Available：也就是剩下的磁盘空间大小；
+  5. Use%：就是磁盘的使用率啦！如果使用率高达 90% 以上时， 最好需要注意一下了，免得容量不足造成系统问题喔！（例如最容易被灌爆的 /var/spool/mail 这个放置邮件的磁盘）
+
+- Mounted on：就是磁盘挂载的目录所在啦！（挂载点啦！）
+
+```
+范例二：将容量结果以易读的容量格式显示出来
+[root@study ~]# df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/mapper/centos-root 10G 3.3G 6.8G 33% /
+devtmpfs 613M 0 613M 0% /dev
+tmpfs 623M 80K 623M 1% /dev/shm
+tmpfs 623M 25M 599M 4% /run
+tmpfs 623M 0 623M 0% /sys/fs/cgroup
+/dev/mapper/centos-home 5.0G 67M 5.0G 2% /home
+/dev/vda2 1014M 131M 884M 13% /boot
+# 不同于范例一，这里会以 G/M 等容量格式显示出来，比较容易看啦！
+范例三：将系统内的所有特殊文件格式及名称都列出来
+[root@study ~]# df -aT
+Filesystem Type 1K-blocks Used Available Use% Mounted on
+rootfs rootfs 10475520 3409368 7066152 33% /
+proc proc 0 0 0 - /proc
+sysfs sysfs 0 0 0 - /sys
+devtmpfs devtmpfs 627700 0 627700 0% /dev
+securityfs securityfs 0 0 0 - /sys/kernel/security
+tmpfs tmpfs 637568 80 637488 1% /dev/shm
+devpts devpts 0 0 0 - /dev/pts
+tmpfs tmpfs 637568 24684 612884 4% /run
+tmpfs tmpfs 637568 0 637568 0% /sys/fs/cgroup
+.....（中间省略）.....
+/dev/mapper/centos-root xfs 10475520 3409368 7066152 33% /
+selinuxfs selinuxfs 0 0 0 - /sys/fs/selinux
+.....（中间省略）.....
+/dev/mapper/centos-home xfs 5232640 67720 5164920 2% /home
+/dev/vda2 xfs 1038336 133704 904632 13% /boot
+binfmt_misc binfmt_misc 0 0 0 - /proc/sys/fs/binfmt_misc
+# 系统里面其实还有很多特殊的文件系统存在的。那些比较特殊的文件系统几乎
+# 都是在内存当中，例如 /proc 这个挂载点。因此，这些特殊的文件系统
+# 都不会占据磁盘空间喔！ ^_^
+范例四：将 /etc 下面的可用的磁盘容量以易读的容量格式显示
+[root@study ~]# df -h /etc
+Filesystem Size Used Avail Use% Mounted on
+/dev/mapper/centos-root 10G 3.3G 6.8G 33% /
+# 这个范例比较有趣一点啦，在 df 后面加上目录或者是文件时， df
+# 会自动的分析该目录或文件所在的 partition ，并将该 partition 的容量显示出来，
+# 所以，您就可以知道某个目录下面还有多少容量可以使用了！ ^_^
+范例五：将目前各个 partition 当中可用的 inode 数量列出
+[root@study ~]# df -ih
+Filesystem Inodes IUsed IFree IUse% Mounted on
+/dev/mapper/centos-root 10M 108K 9.9M 2% /
+devtmpfs 154K 397 153K 1% /dev
+tmpfs 156K 5 156K 1% /dev/shm
+tmpfs 156K 497 156K 1% /run
+tmpfs 156K 13 156K 1% /sys/fs/cgroup
+# 这个范例则主要列出可用的 inode 剩余量与总容量。分析一下与范例一的关系，
+# 你可以清楚的发现到，通常 inode 的数量剩余都比 block 还要多呢
+```
+
+
+
+- du：评估文件系统的磁盘使用量（常用在推估目录所占容量）
+
+```
+[root@study ~]# du [-ahskm] 文件或目录名称
+选项与参数：
+-a ：列出所有的文件与目录容量，因为默认仅统计目录下面的文件量而已。
+-h ：以人们较易读的容量格式 （G/M） 显示；
+-s ：列出总量而已，而不列出每个各别的目录占用容量；
+-S ：不包括子目录下的总计，与 -s 有点差别。
+-k ：以 KBytes 列出容量显示；
+-m ：以 MBytes 列出容量显示；
+范例一：列出目前目录下的所有文件大小
+[root@study ~]# du
+4 ./.cache/dconf &lt;==每个目录都会列出来
+4 ./.cache/abrt
+8 ./.cache
+....（中间省略）....
+0 ./test4
+4 ./.ssh &lt;==包括隐藏文件的目录
+76 . &lt;==这个目录（.）所占用的总量
+# 直接输入 du 没有加任何选项时，则 du 会分析“目前所在目录”
+# 的文件与目录所占用的磁盘空间。但是，实际显示时，仅会显示目录容量（不含文件），
+# 因此 . 目录有很多文件没有被列出来，所以全部的目录相加不会等于 . 的容量喔！
+# 此外，输出的数值数据为 1K 大小的容量单位。
+范例二：同范例一，但是将文件的容量也列出来
+[root@study ~]# du -a
+4 ./.bash_logout &lt;==有文件的列表了
+4 ./.bash_profile
+4 ./.bashrc
+....（中间省略）....
+4 ./.ssh/known_hosts
+4 ./.ssh
+76 .
+范例三：检查根目录下面每个目录所占用的容量
+[root@study ~]# du -sm /*
+0 /bin
+99 /boot
+....（中间省略）....
+du: cannot access ‘/proc/17772/task/17772/fd/4’: No such file or directory
+du: cannot access ‘/proc/17772/fdinfo/4’: No such file or directory
+0 /proc &lt;==不会占用硬盘空间！
+1 /root
+25 /run
+....（中间省略）....
+3126 /usr &lt;==系统初期最大就是他了啦！
+117 /var
+# 这是个很常被使用的功能～利用万用字符 * 来代表每个目录，如果想要检查某个目录下，
+# 哪个次目录占用最大的容量，可以用这个方法找出来。值得注意的是，如果刚刚安装好 Linux 时，
+# 那么整个系统容量最大的应该是 /usr 。而 /proc 虽然有列出容量，但是那个容量是在内存中，
+# 不占磁盘空间。至于 /proc 里头会列出一堆“No such file or directory” 的错误，
+# 别担心！因为是内存内的程序，程序执行结束就会消失，因此会有些目录找不到，是正确的！
+```
+
+
+
+## 二、实体链接与符号链接： ln
+
+- 在 Linux 下面的链接文件有两种，一种是类似 Windows 的捷径功能的文件，可以让你快速的链接到目标文件（或目录）； 另一种则是通过文件系统的 inode 链接来产生新文件名，而不是产生新文件！这种称为实体链接 （hard link）。
+- Hard Link （实体链接, 硬式链接或实际链接）
+- 每个文件都会占用一个 inode ，文件内容由 inode 的记录来指向；
+- 想要读取该文件，必须要经过目录记录的文件名来指向到正确的 inode 号码才能读取。
+- Symbolic Link （符号链接，亦即是捷径）
+
+```
+[root@study ~]# ln [-sf] 来源文件 目标文件
+选项与参数：
+-s ：如果不加任何参数就进行链接，那就是hard link，至于 -s 就是symbolic link
+-f ：如果 目标文件 存在时，就主动的将目标文件直接移除后再创建！
+范例一：将 /etc/passwd 复制到 /tmp 下面，并且观察 inode 与 block
+[root@study ~]# cd /tmp
+[root@study tmp]# cp -a /etc/passwd .
+[root@study tmp]# du -sb ; df -i .
+6602 . &lt;==先注意一下这里的容量是多少！
+Filesystem Inodes IUsed IFree IUse% Mounted on
+/dev/mapper/centos-root 10485760 109748 10376012 2% /
+# 利用 du 与 df 来检查一下目前的参数～那个 du -sb 是计算整个 /tmp 下面有多少 Bytes 的容量啦！
+范例二：将 /tmp/passwd 制作 hard link 成为 passwd-hd 文件，并观察文件与容量
+[root@study tmp]# ln passwd passwd-hd
+[root@study tmp]# du -sb ; df -i .
+6602 .
+Filesystem Inodes IUsed IFree IUse% Mounted on
+/dev/mapper/centos-root 10485760 109748 10376012 2% /
+# 仔细看，即使多了一个文件在 /tmp 下面，整个 inode 与 block 的容量并没有改变！
+[root@study tmp]# ls -il passwd*
+2668897 -rw-r--r--. 2 root root 2092 Jun 17 00:20 passwd
+2668897 -rw-r--r--. 2 root root 2092 Jun 17 00:20 passwd-hd
+# 原来是指向同一个 inode 啊！这是个重点啊！另外，那个第二栏的链接数也会增加！
+范例三：将 /tmp/passwd 创建一个符号链接
+[root@study tmp]# ln -s passwd passwd-so
+[root@study tmp]# ls -li passwd*
+2668897 -rw-r--r--. 2 root root 2092 Jun 17 00:20 passwd
+2668897 -rw-r--r--. 2 root root 2092 Jun 17 00:20 passwd-hd
+2668898 lrwxrwxrwx. 1 root root 6 Jun 23 22:40 passwd-so -&gt; passwd
+# passwd-so 指向的 inode number 不同了！这是一个新的文件～这个文件的内容是指向
+# passwd 的。passwd-so 的大小是 6Bytes ，因为 “passwd” 这个单字共有六个字符之故
+[root@study tmp]# du -sb ; df -i .
+6608 .
+Filesystem Inodes IUsed IFree IUse% Mounted on
+/dev/mapper/centos-root 10485760 109749 10376011 2% /
+# 呼呼！整个容量与 inode 使用数都改变啰～确实如此啊！
+范例四：删除原始文件 passwd ，其他两个文件是否能够打开？
+[root@study tmp]# rm passwd
+[root@study tmp]# cat passwd-hd
+.....（正常显示完毕！）
+[root@study tmp]# cat passwd-so
+cat: passwd-so: No such file or directory
+[root@study tmp]# ll passwd*
+-rw-r--r--. 1 root root 2092 Jun 17 00:20 passwd-hd
+lrwxrwxrwx. 1 root root 6 Jun 23 22:40 passwd-so -&gt; passwd
+# 怕了吧！符号链接果然无法打开！另外，如果符号链接的目标文件不存在，
+# 其实文件名的部分就会有特殊的颜色显示喔！
+```
+
