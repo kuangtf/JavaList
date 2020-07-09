@@ -7,8 +7,7 @@
 > 队列接口指出可以在队列的尾部添加元素，在队列的头部删除元素并且可以查找队列中元素的个数；当需要收集对象时，并按照“先进先出”的方式检索对象，就应该使用队列。
 
 图一：
-![image](https://github.com/ktf-cool/JavaList/edit/master/images/队列1.md
-
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E9%98%9F%E5%88%971.png)
 - 队列的最简形式可能类似这样：
 
 ```
