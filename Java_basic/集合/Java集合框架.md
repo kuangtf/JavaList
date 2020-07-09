@@ -20,7 +20,7 @@ public interface Queue<E> {
 
 > 队列有两种实现方式：一种是使用循环数组，另一种是使用链表。
 
-图二：
+图二：![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0.png)
 
 - 每个实现都可以用一个实现了Queue接口的类表示。
 
@@ -111,7 +111,7 @@ iterator.forEachRemaining(element -> do something with element);
 - 可认为Java迭代器位于两个元素之间，迭代器就会越过下一个元素，并返回刚刚越过的那个元素的引用。
 
 如图：
-
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E5%90%91%E5%89%8D%E7%A7%BB%E5%8A%A8%E8%BF%AD%E4%BB%A3%E5%99%A8.png)
 > Iterator接口的remove方法将会删除上次调用next方法时返回的元素，要删除指定位置上的元素，需要越过这个元素。调用remove方法之前没有调用next，将是不合法的，会抛出异常，必须要先调用next越过将要删除的元素 。
 
 
