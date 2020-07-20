@@ -32,7 +32,7 @@
 
 > 简单的说，我们可以将这三个模式想成下面的图示来表示：
 
-![](D:\java笔记\Java脑图\vi三种模式的相互关系.png)
+![iamge](https://github.com/ktf-cool/JavaList/blob/master/images/vi%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%9B%B8%E4%BA%92%E5%85%B3%E7%B3%BB.png)
 
 > 一般指令模式可与编辑模式及命令行界面切换， 但编辑模式与命令行界面之间不可互相切换。
 
