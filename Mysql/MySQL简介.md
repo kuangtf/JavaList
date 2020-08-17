@@ -82,13 +82,13 @@
 
 - 例子：
 
-![](D:\java笔记\Java脑图\显示数据库.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93.png)
 
 > `SHOW DATABASES`;返回可用数据库的一个列表。包含在这个列表中的可能是`MySQL`内部使用的数据库
 
 - 获得一个数据库内的表的列表，使用`SHOW TABLES`;
 
-![](D:\java笔记\Java脑图\显示表.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E6%98%BE%E7%A4%BA%E8%A1%A8.png)
 
 > `SHOW TABLES`;返回当前选择的数据库内可用表的列表。`SHOW`也可以用来显示表列：
 
