@@ -38,7 +38,7 @@
 
 - 偏向锁的获得和撤退流程：
 
-![](D:\java笔记\并发总结\images\偏向锁的获得和撤退流程.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%80%80%E6%B5%81%E7%A8%8B.png)
 
 - 偏向锁在`Java 6`和`Java 7`里是默认启用的，但是它在应用程序启动几秒钟之后才激活，如有必要可以使用`JVM`参数来关闭延迟：`-XX:BiasedLockingStartupDelay=0`。如果你确定应用程序里所有的锁通常情况下处于竞争状态，可以通过`JVM`参数关闭偏向锁：`-XX:-UseBiasedLocking=false`，那么程序默认会进入轻量级锁状态。
 
@@ -48,10 +48,10 @@
 
 - 轻量级锁解锁：轻量级解锁时，会使用原子的`CAS`操作将`Displaced Mark Word`替换回到对象头，如果成功，则表示没有竞争发生。如果失败，表示当前锁存在竞争，锁就会膨胀成重量级锁。下图是两个线程同时争夺锁，导致锁膨胀的流程图。
 
-![](D:\java笔记\并发总结\images\轻量级锁级膨胀流程图.png)
+![image](https://github.com/ktf-cool/JavaList/edit/master/%E9%AB%98%E5%B9%B6%E5%8F%91/Java%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6.md)
 
 > 因为自旋会消耗`CPU`，为了避免无用的自旋（比如获得锁的线程被阻塞住了），一旦锁升级成重量级锁，就不会再恢复到轻量级锁状态。当锁处于这个状态下，其他线程试图获取锁时，都会被阻塞住，当持有锁的线程释放锁之后会唤醒这些线程，被唤醒的线程就会进行新一轮的夺锁之争。
 
 - 锁的优缺点对比:
 
-![](D:\java笔记\并发总结\images\锁的优缺点对比.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E9%94%81%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%E5%AF%B9%E6%AF%94.png)
