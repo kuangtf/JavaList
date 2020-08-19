@@ -48,7 +48,7 @@
 
 - 轻量级锁解锁：轻量级解锁时，会使用原子的`CAS`操作将`Displaced Mark Word`替换回到对象头，如果成功，则表示没有竞争发生。如果失败，表示当前锁存在竞争，锁就会膨胀成重量级锁。下图是两个线程同时争夺锁，导致锁膨胀的流程图。
 
-![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E9%94%81%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%E5%AF%B9%E6%AF%94.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%BA%A7%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
 
 > 因为自旋会消耗`CPU`，为了避免无用的自旋（比如获得锁的线程被阻塞住了），一旦锁升级成重量级锁，就不会再恢复到轻量级锁状态。当锁处于这个状态下，其他线程试图获取锁时，都会被阻塞住，当持有锁的线程释放锁之后会唤醒这些线程，被唤醒的线程就会进行新一轮的夺锁之争。
 
