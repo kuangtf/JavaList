@@ -50,8 +50,8 @@
 
 - 通过句柄访问对象：
 
-![](D:\java笔记\JVM总结\image\通过句柄访问对象.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E9%80%9A%E8%BF%87%E5%8F%A5%E6%9F%84%E8%AE%BF%E9%97%AE%E5%AF%B9%E8%B1%A1.png)
 
 - 通过直接指针访问对象：
 
-![](D:\java笔记\JVM总结\image\通过指针访问对象.png)
+![image](https://github.com/ktf-cool/JavaList/blob/master/images/%E9%80%9A%E8%BF%87%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE%E5%AF%B9%E8%B1%A1.png)
