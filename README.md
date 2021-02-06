@@ -3,7 +3,7 @@
 ![](https://img.shields.io/github/issues/kuangtf/JavaList)  ![](https://img.shields.io/github/forks/kuangtf/JavaList) ![](https://img.shields.io/github/stars/kuangtf/JavaList)
 
 
-|    <font size=5>算法</font>   | 操作系统 | 网络                   | 计组       | Java基础 | 数据库 |
+|    <font size=10>算法</font>   | 操作系统 | 网络                   | 计组       | Java基础 | 数据库 |
 | --------- | -------- | ---------------------- | ---------- | -------- | ------ |
 | :pencil2: | :tv:     | :globe_with_meridians: | :computer: | :pencil: | :date: |
 
