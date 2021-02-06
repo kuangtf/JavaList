@@ -1,5 +1,10 @@
 ### 一个热衷于分享的Java菜鸟，努力去大厂的路上，一起加油吧！
 
+![](https://img.shields.io/github/issues/kuangtf/JavaList)
+
+![](https://img.shields.io/github/forks/kuangtf/JavaList)
+
+![](https://img.shields.io/github/stars/kuangtf/JavaList)
 
 ### 一份比较完整的Java学习路线
 
